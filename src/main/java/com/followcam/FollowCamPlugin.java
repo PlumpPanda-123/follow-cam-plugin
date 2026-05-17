@@ -122,6 +122,6 @@ public class FollowCamPlugin extends Plugin
 			smoothYaw = ((smoothYaw % ANGLE_MAX) + ANGLE_MAX) % ANGLE_MAX;
 		}
 
-		client.setCameraYaw((int) Math.round(smoothYaw));
+		client.setCameraYawTarget((int) Math.round(smoothYaw));
 	}
 }
