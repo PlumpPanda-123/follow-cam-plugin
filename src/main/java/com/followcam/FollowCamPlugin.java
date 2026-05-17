@@ -93,7 +93,8 @@ public class FollowCamPlugin extends Plugin
 			return;
 		}
 
-		double target = local.getOrientation();
+		// Player orientation 0 = south; camera yaw 0 = north — correct with +180°.
+		double target = (local.getOrientation() + ANGLE_HALF) & (ANGLE_MAX - 1);
 
 		// Find the shortest arc between smoothYaw and target, handling the
 		// 0/2048 wrap boundary so we always rotate the "short way round".
