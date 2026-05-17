@@ -93,8 +93,13 @@ public class FollowCamPlugin extends Plugin
 			return;
 		}
 
-		// Player orientation 0 = south; camera yaw 0 = north — correct with +180°.
-		double target = (local.getOrientation() + ANGLE_HALF) & (ANGLE_MAX - 1);
+		// Player orientation is CLOCKWISE  (S=0, W=512, N=1024, E=1536).
+		// Camera yaw is COUNTER-CLOCKWISE (N=0, W=512, S=1024, E=1536).
+		// E and W share the same JAU value in both systems, so they aligned
+		// without any correction. N and S are swapped because S=0 maps to
+		// camera-north (yaw 0). Fix: negate the orientation and shift by
+		// ANGLE_HALF, which maps every direction correctly.
+		double target = (ANGLE_HALF - local.getOrientation() + ANGLE_MAX) & (ANGLE_MAX - 1);
 
 		// Find the shortest arc between smoothYaw and target, handling the
 		// 0/2048 wrap boundary so we always rotate the "short way round".
