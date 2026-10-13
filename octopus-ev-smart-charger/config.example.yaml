@@ -1,0 +1,32 @@
+# Copy to config.yaml and edit.
+dry_run: true            # log decisions only; flip to false once you trust it
+poll_seconds: 60
+
+octopus:
+  # Any half-hourly tariff works (Agile, Intelligent Go, Cosy, Go...).
+  # Find yours in your Octopus account / app. Region letter is the last char (e.g. C = London).
+  product_code: AGILE-24-10-01
+  tariff_code: E-1R-AGILE-24-10-01-C
+  # Free-electricity sessions (Octoplus) are announced via app/email: add them here.
+  manual_free_windows: []
+  #  - {start: "2026-11-08T12:00:00+00:00", end: "2026-11-08T13:00:00+00:00"}
+
+car:
+  battery_kwh: 82.5          # Seal Excellent AWD/RWD 82.56; Seal Design RWD ~61.4
+  charge_efficiency: 0.90    # wall-to-battery losses
+  target_soc: 80             # must-have by deadline
+  opportunistic_soc: 100     # extra charge, only in free/negative slots
+  ready_by: "07:00"          # local time deadline
+  fallback_soc: 30           # assumed if SoC can't be read
+
+charger:
+  power_kw: 7.4              # 32A single phase
+  max_price_p_per_kwh: 25    # never pay more than this for the "must-have" energy (0 = no cap)
+  free_threshold_p: 0.0      # slots at/below this count as free
+
+home_assistant:
+  url: http://homeassistant.local:8123
+  # token comes from HA_TOKEN env var (long-lived access token)
+  charger_switch: switch.ev_charger_charging
+  car_soc_sensor: sensor.byd_seal_battery_level
+  car_plugged_in: binary_sensor.ev_charger_plugged_in   # optional, remove if unavailable
