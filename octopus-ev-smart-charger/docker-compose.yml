@@ -1,9 +1,0 @@
-services:
-  ev-charger:
-    build: .
-    restart: unless-stopped
-    environment:
-      HA_TOKEN: ${HA_TOKEN:-}
-    volumes:
-      - ./config.yaml:/app/config.yaml:ro
-      - ./data:/app/data
